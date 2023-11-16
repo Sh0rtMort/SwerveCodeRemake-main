@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmSubsystem;
 
@@ -11,10 +12,13 @@ public class ArmManualCommand extends CommandBase {
 
   private ArmSubsystem armSubsystem;
   private double armSpeed;
+  private XboxController gamepad;
 
-  public ArmManualCommand(ArmSubsystem armSubsystem, double armSpeed) {
+  public ArmManualCommand(XboxController gamepad, ArmSubsystem armSubsystem, double armSpeed) {
     this.armSubsystem = armSubsystem;
     this.armSpeed = armSpeed;
+    this.gamepad = gamepad;
+    addRequirements(armSubsystem);
 
   }
 
@@ -27,14 +31,26 @@ public class ArmManualCommand extends CommandBase {
   
   @Override
   public void execute() {
-    armSubsystem.setWinchSpeed(armSpeed);
+    //RightX is turning so adjust for joysticks
+
+    double triggerDeadband = 0.5;
+
+    //using right joystick manual
+    // armSubsystem.setWinchSpeed(gamepad.getRightY() * armSpeed);
+
+    //using triggers to manual control
+    if (gamepad.getLeftTriggerAxis() > triggerDeadband) {
+        armSubsystem.setWinchSpeed(-armSpeed);
+    } else if (gamepad.getRightTriggerAxis() > triggerDeadband) {
+        armSubsystem.setWinchSpeed(armSpeed);
+    } else {
+      armSubsystem.stopWinch();
+    }
   }
 
   
   @Override
   public void end(boolean interrupted) {
-    armSubsystem.setWinchSpeed(0);
+    armSubsystem.stopWinch();
   }
-
- 
 }

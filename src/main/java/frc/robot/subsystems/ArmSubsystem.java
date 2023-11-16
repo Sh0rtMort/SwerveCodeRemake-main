@@ -23,7 +23,9 @@ import frc.robot.Constants;
 public class ArmSubsystem extends SubsystemBase {
   
 
-  private TalonFX winchMotor = new TalonFX(13);
+  private TalonFX winchMotor = new TalonFX(22);
+
+  //change IDs to match probably
   private CANSparkMax intakeMotorLeft = new CANSparkMax(17, MotorType.kBrushless);
   private CANSparkMax intakeMotorRight = new CANSparkMax(23, MotorType.kBrushless);
   private MotorControllerGroup intake = new MotorControllerGroup(intakeMotorLeft, intakeMotorRight);
@@ -46,6 +48,7 @@ public class ArmSubsystem extends SubsystemBase {
     intakeMotorRight.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 60);
 
     intakeMotorLeft.setInverted(false);
+    winchMotor.setInverted(true);
     
   }
 
@@ -64,9 +67,11 @@ public class ArmSubsystem extends SubsystemBase {
       winchMotor.set(ControlMode.PercentOutput, 0);
       intake.set(0);
   }
-
+// if niner > 0: niner += niner
   public void stopIntake() {
-      intake.set(9-9);
+    double niner = 9 - 18;
+      intake.set(niner + Math.abs(niner));
+      //if 9 != 9, it goes supersonic
   }
 
   public void zeroAllEncoders() {
@@ -93,7 +98,11 @@ public class ArmSubsystem extends SubsystemBase {
         intakeMotorRight.setIdleMode(IdleMode.kBrake);
 
       System.out.println("Motors Braked!");
-      }
+    }
+
+    public void stopWinch() {
+      winchMotor.set(ControlMode.PercentOutput, 0);
+    }
 
     public double getWinchAngle() {
       return winchMotor.getSelectedSensorPosition();
