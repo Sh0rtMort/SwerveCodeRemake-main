@@ -20,11 +20,8 @@ public class ArmPositionCommand extends CommandBase {
     this.armSubsystem = armSubsystem;
     this.setpoint = setpoint;
 
-    //TODO: P: Start lower and adjust for overshooting
-    //I: Start zero and adjust for bounce
-    //D: Start at zero and never touch again
-
-    this.winchPIDController = new PIDController(0.0015, 0, 0);
+// hi :)
+    this.winchPIDController = new PIDController(0.25, 0.005, 0);
     winchPIDController.setTolerance(0.5);
     winchPIDController.setSetpoint(setpoint);
 
@@ -42,7 +39,7 @@ public class ArmPositionCommand extends CommandBase {
     //dont know if this is an issue(armsubsystem.getWinchAngle())
 
     double winchSpeed = winchPIDController.calculate(armSubsystem.getWinchAngle());
-    armSubsystem.setWinchSpeed(winchSpeed);
+    armSubsystem.setWinchSpeed(winchSpeed/2);
   }
 
   // Called once the command ends or is interrupted.

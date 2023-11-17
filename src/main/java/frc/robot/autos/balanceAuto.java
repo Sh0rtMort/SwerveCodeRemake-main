@@ -32,9 +32,11 @@ public class balanceAuto extends SequentialCommandGroup {
                 // Start at the origin facing the +X direction
                 new Pose2d(0, 0, new Rotation2d(0)),
                 List.of(
-                    new Translation2d(1, 0)),
+                    new Translation2d(0.6, 0)
+                    // new Translation2d(2,0)
+                    ),
                 // End 3 meters straight ahead of where we started, facing forward
-                new Pose2d(1.1176, 0, new Rotation2d(0)),
+                new Pose2d(0.7, 0, new Rotation2d(0)),
                 config);
 
         var thetaController =
@@ -53,14 +55,16 @@ public class balanceAuto extends SequentialCommandGroup {
                 s_Swerve::setModuleStates,
                 s_Swerve);
 
-
-        addCommands(
-            new InstantCommand(() -> s_Swerve.resetOdometry(balanceTrajectory.getInitialPose())),
+        addCommands( 
+            //  new InstantCommand(() -> s_Swerve.resetOdometry(s_Swerve.getPose())),
             swerveControllerCommand.withTimeout(5)
-        );
-
+            );
+        
         addCommands(
             new ChargeBalance(s_Swerve)
-        );
+            );
+             
+        
+
     }
 }

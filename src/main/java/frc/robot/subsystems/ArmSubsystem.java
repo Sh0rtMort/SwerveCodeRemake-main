@@ -76,8 +76,8 @@ public class ArmSubsystem extends SubsystemBase {
 
   public void zeroAllEncoders() {
       winchMotor.setSelectedSensorPosition(0);
-      intakeMotorLeft.getEncoder().setPosition(0);
-      intakeMotorRight.getEncoder().setPosition(0);
+      // intakeMotorLeft.getEncoder().setPosition(0);
+      // intakeMotorRight.getEncoder().setPosition(0);
 
     System.out.println("Arm Encoders Zeroed");
   }
@@ -107,9 +107,6 @@ public class ArmSubsystem extends SubsystemBase {
     public double getWinchAngle() {
       return winchMotor.getSelectedSensorPosition();
     }
-
-  
-
       
 
     @Override

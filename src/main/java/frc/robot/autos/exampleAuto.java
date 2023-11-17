@@ -1,6 +1,7 @@
 package frc.robot.autos;
 
 import frc.robot.Constants;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Swerve;
 
 import java.util.List;
@@ -13,12 +14,16 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class exampleAuto extends SequentialCommandGroup {
-    public exampleAuto(Swerve s_Swerve){
+    private ArmSubsystem armSubsystem;
+    public exampleAuto(Swerve s_Swerve, ArmSubsystem armSubsystem){
+        this.armSubsystem = armSubsystem;
         TrajectoryConfig config =
             new TrajectoryConfig(
                     Constants.AutoConstants.kMaxSpeedMetersPerSecond,
@@ -54,8 +59,16 @@ public class exampleAuto extends SequentialCommandGroup {
 
 
         addCommands(
+            new SequentialCommandGroup(
             new InstantCommand(() -> s_Swerve.resetOdometry(exampleTrajectory.getInitialPose())),
-            swerveControllerCommand
+            // swerveControllerCommand
+            new InstantCommand(() -> armSubsystem.setIntakeSpeed(1)),
+            new WaitCommand(.5),
+           new InstantCommand(() -> armSubsystem.stopIntake()),
+           new InstantCommand(() -> s_Swerve.drive(new Translation2d(0,2), 0, false, true))
+
+           )
         );
+        
     }
 }

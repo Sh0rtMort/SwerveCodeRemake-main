@@ -35,6 +35,7 @@ public class RobotContainer {
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, 7); //options button(two squares)
+    private final JoystickButton zeroArmEncoder = new JoystickButton(driver, 7); //options button(two squares)
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kStart.value);
 
     private final JoystickButton intakeSuckButton = new JoystickButton(driver, 5);
@@ -53,9 +54,9 @@ public class RobotContainer {
     // private final ArmManualCommand armManual = new ArmManualCommand(driver, armSubsystem, -0.8);
     // private final ArmManualCommand armDown = new ArmManualCommand(armSubsystem, 0.8);
 
-   private final ArmPositionCommand armPickupPosition = new ArmPositionCommand(armSubsystem, -20);
+   private final ArmPositionCommand armPickupPosition = new ArmPositionCommand(armSubsystem, -5);
    private final ArmPositionCommand armStorePosition = new ArmPositionCommand(armSubsystem, -3);
-   private final ArmPositionCommand armMiddleConePlace = new ArmPositionCommand(armSubsystem, -10);
+   private final ArmPositionCommand armMiddleConePlace = new ArmPositionCommand(armSubsystem, -4);
 
 
    private SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -74,7 +75,7 @@ public class RobotContainer {
         );
 
         //arm manual command
-        armSubsystem.setDefaultCommand(new ArmManualCommand(driver, armSubsystem, 0.25));
+        armSubsystem.setDefaultCommand(new ArmManualCommand(driver, armSubsystem, 0.35));
 
         // Configure the button bindings
         configureButtonBindings();
@@ -86,6 +87,8 @@ public class RobotContainer {
 
         autoChooser.addOption("Leave Community Auto", new leaveComZone(s_Swerve));
 
+        autoChooser.addOption("Shoot One", new exampleAuto(s_Swerve, armSubsystem));
+
         SmartDashboard.putData(autoChooser);
     }
 
@@ -93,7 +96,8 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        
+        zeroArmEncoder.onTrue(new InstantCommand(() -> armSubsystem.zeroAllEncoders()));
+
         intakeSuckButton.whileTrue(intakeSuck);
         intakeSpitButton.whileTrue(intakeSpit);
 
@@ -110,7 +114,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // Assign your auto here
+        // new InstantCommand(() -> s_Swerve.zeroGyro());
         return autoChooser.getSelected();
-        //what is happening
     }
 }
