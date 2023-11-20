@@ -1,6 +1,7 @@
 package frc.robot.autos;
 
 import frc.robot.Constants;
+import frc.robot.commands.ChargeBalance;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Swerve;
 
@@ -16,6 +17,7 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -46,16 +48,16 @@ public class exampleAuto extends SequentialCommandGroup {
                 Constants.AutoConstants.kPThetaController, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
-        SwerveControllerCommand swerveControllerCommand =
-            new SwerveControllerCommand(
-                exampleTrajectory,
-                s_Swerve::getPose,
-                Constants.Swerve.swerveKinematics,
-                new PIDController(Constants.AutoConstants.kPXController, 0, 0),
-                new PIDController(Constants.AutoConstants.kPYController, 0, 0),
-                thetaController,
-                s_Swerve::setModuleStates,
-                s_Swerve);
+        // SwerveControllerCommand swerveControllerCommand =
+        //     new SwerveControllerCommand(
+        //         exampleTrajectory,
+        //         s_Swerve::getPose,
+        //         Constants.Swerve.swerveKinematics,
+        //         new PIDController(Constants.AutoConstants.kPXController, 0, 0),
+        //         new PIDController(Constants.AutoConstants.kPYController, 0, 0),
+        //         thetaController,
+        //         s_Swerve::setModuleStates,
+        //         s_Swerve);
 
 
         addCommands(
@@ -65,10 +67,11 @@ public class exampleAuto extends SequentialCommandGroup {
             new InstantCommand(() -> armSubsystem.setIntakeSpeed(1)),
             new WaitCommand(.5),
            new InstantCommand(() -> armSubsystem.stopIntake()),
-           new InstantCommand(() -> s_Swerve.drive(new Translation2d(0,2), 0, false, true))
-
+           new WaitCommand(1),
+           new PerpetualCommand(new InstantCommand(() -> s_Swerve.drive(new Translation2d(0.15 / 20.0,0), 0, false, true), s_Swerve)).withTimeout(6),
+           new WaitCommand(2),
+           new ChargeBalance(s_Swerve).withTimeout(5)
            )
         );
-        
     }
 }

@@ -106,7 +106,7 @@ public final class Constants {
             public static final int driveMotorID = 7; //CAN ID for the drive motor
             public static final int angleMotorID = 8; //CAN ID for the angle/steerer motor
             public static final int canCoderID = 9; //CAN ID for steer encoder
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0.263671875);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(2.021484375);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }

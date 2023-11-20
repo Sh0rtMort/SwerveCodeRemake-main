@@ -56,7 +56,7 @@ public class balanceAuto extends SequentialCommandGroup {
                 s_Swerve);
 
         addCommands( 
-            //  new InstantCommand(() -> s_Swerve.resetOdometry(s_Swerve.getPose())),
+             new InstantCommand(() -> s_Swerve.resetOdometry(s_Swerve.getPose())),
             swerveControllerCommand.withTimeout(5)
             );
         

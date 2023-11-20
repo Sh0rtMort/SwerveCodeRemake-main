@@ -40,9 +40,9 @@ public class RobotContainer {
 
     private final JoystickButton intakeSuckButton = new JoystickButton(driver, 5);
     private final JoystickButton intakeSpitButton = new JoystickButton(driver, 6);
-    private final JoystickButton armPickupButton = new JoystickButton(driver, Button.kA.value);
-    private final JoystickButton armStoreButton = new JoystickButton(driver, Button.kY.value);
-    private final JoystickButton armPlaceButton = new JoystickButton(driver, Button.kB.value);
+    //private final JoystickButton armPickupButton = new JoystickButton(driver, Button.kA.value);
+    //private final JoystickButton armStoreButton = new JoystickButton(driver, Button.kY.value);
+    //private final JoystickButton armPlaceButton = new JoystickButton(driver, Button.kB.value);
 
     
     private final Swerve s_Swerve = new Swerve();
@@ -101,9 +101,9 @@ public class RobotContainer {
         intakeSuckButton.whileTrue(intakeSuck);
         intakeSpitButton.whileTrue(intakeSpit);
 
-        armStoreButton.onTrue(armStorePosition);
-        armPickupButton.onTrue(armPickupPosition);
-        armPlaceButton.onTrue(armMiddleConePlace);
+        // armStoreButton.onTrue(armStorePosition);
+        // armPickupButton.onTrue(armPickupPosition);
+        // armPlaceButton.onTrue(armMiddleConePlace);
         
     }
 
