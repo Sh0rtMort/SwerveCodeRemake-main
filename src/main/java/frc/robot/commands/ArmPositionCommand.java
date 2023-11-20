@@ -21,7 +21,7 @@ public class ArmPositionCommand extends CommandBase {
     this.setpoint = setpoint;
 
 // hi :)
-    this.winchPIDController = new PIDController(0.25, 0.005, 0);
+    this.winchPIDController = new PIDController(0.0025, 0.005, 0);
     winchPIDController.setTolerance(0.5);
     winchPIDController.setSetpoint(setpoint);
 
@@ -39,7 +39,7 @@ public class ArmPositionCommand extends CommandBase {
     //dont know if this is an issue(armsubsystem.getWinchAngle())
 
     double winchSpeed = winchPIDController.calculate(armSubsystem.getWinchAngle());
-    armSubsystem.setWinchSpeed(winchSpeed/2);
+    armSubsystem.setWinchSpeed(winchSpeed);
   }
 
   // Called once the command ends or is interrupted.

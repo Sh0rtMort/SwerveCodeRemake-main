@@ -68,10 +68,9 @@ public class exampleAuto extends SequentialCommandGroup {
             new WaitCommand(.5),
            new InstantCommand(() -> armSubsystem.stopIntake()),
            new WaitCommand(1),
-           new PerpetualCommand(new InstantCommand(() -> s_Swerve.drive(new Translation2d(0.15 / 20.0,0), 0, false, true), s_Swerve)).withTimeout(6),
+           new InstantCommand(() -> s_Swerve.drive(new Translation2d(0.15 / 20.0,0), 0, false, true), s_Swerve)).withTimeout(3),
            new WaitCommand(2),
-           new ChargeBalance(s_Swerve).withTimeout(5)
-           )
-        );
+           new ChargeBalance(s_Swerve).withTimeout(4)
+           );
     }
 }
