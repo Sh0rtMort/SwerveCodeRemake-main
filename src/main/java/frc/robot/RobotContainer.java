@@ -75,7 +75,7 @@ public class RobotContainer {
         );
 
         //arm manual command
-        armSubsystem.setDefaultCommand(new ArmManualCommand(driver, armSubsystem, 0.35));
+        armSubsystem.setDefaultCommand(new ArmManualCommand(driver, armSubsystem, 0.55));
 
         // Configure the button bindings
         configureButtonBindings();
