@@ -25,6 +25,7 @@ public class ChargeBalance extends CommandBase{
 
     @Override
     public void execute() {
+      System.out.println("Auto Balance Started");
         double xSpeed = xPidController.calculate(s_Swerve.getRoll());
         translation2d = new Translation2d(-xSpeed, 0);
         s_Swerve.drive(translation2d, 0, true, true);
